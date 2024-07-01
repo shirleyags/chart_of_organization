@@ -4,17 +4,7 @@ import TextFieldForm from '../TextFieldForm'
 import DropDownList from '../DropDownList'
 import Button from '../Button'
 
-const Form = () => {
-  const squads = [
-    'Programação',
-    'Front-End',
-    'Data Science',
-    'DevOps',
-    'UX e Design',
-    'Mobile',
-    'Inovação e Gestão'
-  ]
-
+const Form = props => {
   const [name, setName] = useState('')
   const [ocupation, setOcupation] = useState('')
   const [image, setImage] = useState('')
@@ -22,6 +12,16 @@ const Form = () => {
 
   const onSalve = event => {
     event.preventDefault()
+    props.registeredEmployee({
+      name,
+      ocupation,
+      image,
+      selectTeam
+    })
+    setName('')
+    setOcupation('')
+    setImage('')
+    setSelectTeam(selectTeam[0])
   }
   return (
     <section className="section-form">
@@ -42,6 +42,7 @@ const Form = () => {
           valueChanged={value => setOcupation(value)}
         />
         <TextFieldForm
+          mandatory={true}
           label="Imagem"
           placeholder="Digite o endereço da imagem"
           value={image}
@@ -50,7 +51,7 @@ const Form = () => {
         <DropDownList
           mandatory={true}
           label="Times"
-          itens={squads}
+          itens={props.nameTeams}
           value={selectTeam}
           valueChanged={value => setSelectTeam(value)}
         />
