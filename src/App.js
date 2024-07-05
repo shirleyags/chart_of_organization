@@ -43,6 +43,10 @@ function App() {
     setEmployees([...employees, employee])
   }
 
+  const deleteCard = id => {
+    setEmployees(employees.filter(employee => employee.id !== id))
+  }
+
   return (
     <div className="App">
       <Banner />
@@ -59,6 +63,7 @@ function App() {
           employees={employees.filter(
             employee => employee.selectTeam === team.name
           )}
+          whenDelete={deleteCard}
         />
       ))}
     </div>
