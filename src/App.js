@@ -2,49 +2,61 @@ import { useState } from 'react'
 import Banner from './components/Banner'
 import Form from './components/Form'
 import Team from './components/Team'
+import { v4 as uuidv4 } from 'uuid'
 
 function App() {
-  const teams = [
+  const [teams, setTeams] = useState([
     {
+      id: uuidv4(),
       name: 'Engenharia de Software',
-      primaryColor: '#82CFFA',
-      secondaryColor: '#E8F8FF'
+      color: '#82CFFA'
     },
     {
+      id: uuidv4(),
       name: 'Infraestrutura',
-      primaryColor: '#A6D157',
-      secondaryColor: '#F0F8E2'
+      color: '#A6D157'
     },
     {
+      id: uuidv4(),
       name: 'Devops',
-      primaryColor: '#E06B69',
-      secondaryColor: '#FDE7E8'
+      color: '#E06B69'
     },
     {
+      id: uuidv4(),
       name: 'UX e Design',
-      primaryColor: '#D86EBF',
-      secondaryColor: '#FAE5F5'
+      color: '#D86EBF'
     },
     {
+      id: uuidv4(),
       name: 'Negócios',
-      primaryColor: '#FEBA05',
-      secondaryColor: '#FFF5D9'
+      color: '#FEBA05'
     },
     {
+      id: uuidv4(),
       name: 'Inovação',
-      primaryColor: '#FF8A29',
-      secondaryColor: '#FFEEDF'
+      color: '#FF8A29'
     }
-  ]
+  ])
 
   const [employees, setEmployees] = useState([])
 
   const newCollaboratorAdded = employee => {
-    setEmployees([...employees, employee])
+    setEmployees([...employees, { ...employee, id: uuidv4() }])
   }
 
   const deleteCard = id => {
     setEmployees(employees.filter(employee => employee.id !== id))
+  }
+
+  const chanceTeamColor = (color, id) => {
+    setTeams(
+      teams.map(team => {
+        if (team.id === id) {
+          team.color = color
+        }
+        return team
+      })
+    )
   }
 
   return (
@@ -56,10 +68,11 @@ function App() {
       />
       {teams.map(team => (
         <Team
-          key={team.name}
+          changeColor={chanceTeamColor}
+          key={team.id}
+          id={team.id}
           name={team.name}
-          primaryColor={team.primaryColor}
-          secondaryColor={team.secondaryColor}
+          color={team.color}
           employees={employees.filter(
             employee => employee.selectTeam === team.name
           )}
