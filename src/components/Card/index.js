@@ -1,4 +1,6 @@
 import { IoMdCloseCircle } from 'react-icons/io'
+import { FaHeart, FaRegHeart } from 'react-icons/fa6'
+
 import './Card.css'
 
 const Card = ({
@@ -7,8 +9,19 @@ const Card = ({
   ocupation,
   image,
   cardBackgroundColor,
-  whenDelete
+  whenDelete,
+  favorite,
+  selectAsFavorite
 }) => {
+  const chooseFavorite = () => {
+    selectAsFavorite(id)
+  }
+
+  const favoriteProps = {
+    size: 27,
+    onClick: chooseFavorite
+  }
+
   return (
     <div className="card">
       <IoMdCloseCircle
@@ -23,6 +36,13 @@ const Card = ({
       <div className="footer">
         <h4>{name}</h4>
         <h5>{ocupation}</h5>
+        <div className="favorite">
+          {favorite ? (
+            <FaHeart {...favoriteProps} color="#ff0000" />
+          ) : (
+            <FaRegHeart {...favoriteProps} />
+          )}
+        </div>
       </div>
     </div>
   )
