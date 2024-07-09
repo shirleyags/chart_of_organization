@@ -1,18 +1,20 @@
 import './Form.css'
 import { useState } from 'react'
-import TextFieldForm from '../TextFieldForm'
+import FieldForm from '../FieldForm'
 import DropDownList from '../DropDownList'
 import Button from '../Button'
 
-const Form = props => {
+const Form = ({ registerNewTeam, registeredEmployee, nameTeams }) => {
   const [name, setName] = useState('')
   const [ocupation, setOcupation] = useState('')
   const [image, setImage] = useState('')
   const [selectTeam, setSelectTeam] = useState('Escolha um time')
+  const [teamName, setTeamName] = useState('')
+  const [teamColor, setTeamColor] = useState()
 
-  const onSalve = event => {
+  const onSave = event => {
     event.preventDefault()
-    props.registeredEmployee({
+    registeredEmployee({
       name,
       ocupation,
       image,
@@ -23,25 +25,31 @@ const Form = props => {
     setImage('')
     setSelectTeam(selectTeam[0])
   }
+
+  const onSaveNewTeam = event => {
+    event.preventDefault()
+    registerNewTeam({ name: teamName, color: teamColor })
+  }
+
   return (
     <section className="section-form">
-      <form onSubmit={onSalve}>
+      <form onSubmit={onSave}>
         <h2>Preencha os dados para criar o card do colaborador</h2>
-        <TextFieldForm
-          mandatory={true}
+        <FieldForm
+          mandatory
           label="Nome"
           placeholder="Digite o nome"
           value={name}
           valueChanged={value => setName(value)}
         />
-        <TextFieldForm
-          mandatory={true}
+        <FieldForm
+          mandatory
           label="Cargo"
           placeholder="Digite o cargo"
           value={ocupation}
           valueChanged={value => setOcupation(value)}
         />
-        <TextFieldForm
+        <FieldForm
           mandatory={true}
           label="Imagem"
           placeholder="Digite o endereço da imagem"
@@ -49,13 +57,32 @@ const Form = props => {
           valueChanged={value => setImage(value)}
         />
         <DropDownList
-          mandatory={true}
+          mandatory
           label="Times"
-          itens={props.nameTeams}
+          itens={nameTeams}
           value={selectTeam}
           valueChanged={value => setSelectTeam(value)}
         />
         <Button>Criar card</Button>
+      </form>
+      <form onSubmit={onSaveNewTeam}>
+        <h2>Preencha os dados para criar um novo time</h2>
+        <FieldForm
+          mandatory
+          label="Nome"
+          placeholder="Digite o nome do time"
+          value={teamName}
+          valueChanged={value => setTeamName(value)}
+        />
+        <FieldForm
+          mandatory
+          type="color"
+          label="Cor"
+          placeholder="Digite a cor do time em hexadecimal"
+          value={teamColor}
+          valueChanged={value => setTeamColor(value)}
+        />
+        <Button>Criar um novo time</Button>
       </form>
     </section>
   )
