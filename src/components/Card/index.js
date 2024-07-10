@@ -1,5 +1,4 @@
-import { IoMdCloseCircle } from 'react-icons/io'
-import { FaHeart, FaRegHeart } from 'react-icons/fa6'
+import { IoMdCloseCircle, IoIosStar, IoIosStarOutline } from 'react-icons/io'
 
 import './Card.css'
 
@@ -38,9 +37,9 @@ const Card = ({
         <h5>{ocupation}</h5>
         <div className="favorite">
           {favorite ? (
-            <FaHeart {...favoriteProps} color="#ff0000" />
+            <IoIosStar {...favoriteProps} color="#FFD700" />
           ) : (
-            <FaRegHeart {...favoriteProps} />
+            <IoIosStarOutline {...favoriteProps} />
           )}
         </div>
       </div>
