@@ -41,7 +41,7 @@ function App() {
   const [employees, setEmployees] = useState([])
 
   const newCollaboratorAdded = employee => {
-    setEmployees([...employees, { ...employee, id: uuidv4() }])
+    setEmployees([...employees, { ...employee, id: uuidv4(), favorite: false }])
   }
 
   const deleteCard = id => {
@@ -63,6 +63,17 @@ function App() {
     setTeams([...teams, { ...newTeam, id: uuidv4() }])
   }
 
+  const selectAsFavorite = id => {
+    setEmployees(
+      employees.map(employee => {
+        if (employee.id === id) {
+          employee.favorite = !employee.favorite
+        }
+        return employee
+      })
+    )
+  }
+
   return (
     <div className="App">
       <Banner />
@@ -73,6 +84,7 @@ function App() {
       />
       {teams.map(team => (
         <Team
+          selectAsFavorite={selectAsFavorite}
           changeColor={chanceTeamColor}
           key={team.id}
           id={team.id}

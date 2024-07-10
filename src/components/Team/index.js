@@ -2,7 +2,15 @@ import './Team.css'
 import Card from '../Card'
 import hexToRgba from 'hex-to-rgba'
 
-const Team = ({ name, color, employees, whenDelete, changeColor, id }) => {
+const Team = ({
+  name,
+  color,
+  employees,
+  whenDelete,
+  changeColor,
+  id,
+  selectAsFavorite
+}) => {
   return (
     employees.length > 0 && (
       <section
@@ -27,6 +35,8 @@ const Team = ({ name, color, employees, whenDelete, changeColor, id }) => {
                 image={employee.image}
                 whenDelete={whenDelete}
                 id={employee.id}
+                favorite={employee.favorite}
+                selectAsFavorite={selectAsFavorite}
               />
             )
           })}
